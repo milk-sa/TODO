@@ -75,10 +75,15 @@ WSGI_APPLICATION = 'todo_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django_db',
+        'USER': 'root',
+        'PASSWORD': '0000',  # Replace with the password you used in Workbench
+        'HOST': 'localhost',
+        'PORT': '3308',
     }
 }
+
 
 
 # Password validation

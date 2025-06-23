@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Todo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #c8f542;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 28rem;
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: none;
+            border: none;
+            color: #374151;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: color 0.2s;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            color: #111827;
+        }
+
+        .back-arrow {
+            width: 1rem;
+            height: 1rem;
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-input {
+            background: white;
+            border: none;
+            border-radius: 9999px;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            outline: none;
+            transition: box-shadow 0.2s;
+            color: #111827;
+        }
+
+        .form-input:focus {
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #9ca3af;
+        }
+
+        .form-textarea {
+            background: white;
+            border: none;
+            border-radius: 1.5rem;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            outline: none;
+            resize: vertical;
+            min-height: 120px;
+            font-family: inherit;
+            transition: box-shadow 0.2s;
+            color: #111827;
+        }
+
+        .form-textarea:focus {
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-textarea::placeholder {
+            color: #9ca3af;
+        }
+
+        .date-input-container {
+            position: relative;
+        }
+
+        .date-input {
+            background: white;
+            border: none;
+            border-radius: 9999px;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            outline: none;
+            width: 100%;
+            transition: box-shadow 0.2s;
+            color: #111827;
+        }
+
+        .date-input:focus {
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .date-label {
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+            pointer-events: none;
+            font-size: 1rem;
+        }
+
+        .date-input:focus + .date-label,
+        .date-input:valid + .date-label {
+            display: none;
+        }
+
+        .submit-button {
+            background-color: #000;
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            padding: 1rem 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 1rem;
+            align-self: center;
+        }
+
+        .submit-button:hover {
+            background-color: #374151;
+        }
+
+        .error-message {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{% url 'task_list' %}" class="back-button">
+            <svg class="back-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            Back to Task List
+        </a>
+
+        <form class="form-container" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <input 
+                    type="text" 
+                    class="form-input" 
+                    name="title"
+                    value="{{ task.title }}"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <textarea 
+                    class="form-textarea" 
+                    name="description"
+                    required
+                >{{ task.description }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <div class="date-input-container">
+                    <input 
+                        type="date" 
+                        class="date-input" 
+                        name="due_date"
+                        value="{{ task.due_date }}"
+                        required
+                    >
+                </div>
+            </div>
+
+            <button type="submit" class="submit-button">Update</button>
+        </form>
+    </div>
+</body>
+</html>
